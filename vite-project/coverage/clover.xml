@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1790182625772" clover="3.2.0">
+  <project timestamp="1790182625772" name="All files">
+    <metrics statements="48" coveredstatements="25" conditionals="12" coveredconditionals="4" methods="13" coveredmethods="6" elements="73" coveredelements="35" complexity="0" loc="48" ncloc="48" packages="2" files="3" classes="3"/>
+    <package name="components">
+      <metrics statements="20" coveredstatements="18" conditionals="4" coveredconditionals="4" methods="7" coveredmethods="6"/>
+      <file name="NoteForm.jsx" path="/Users/vladimirapostolov/Desktop/new-app/vite-project/components/NoteForm.jsx">
+        <metrics statements="20" coveredstatements="18" conditionals="4" coveredconditionals="4" methods="7" coveredmethods="6"/>
+        <line num="4" count="1" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="6" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="10" count="32" type="stmt"/>
+        <line num="13" count="39" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="23" count="39" type="stmt"/>
+        <line num="24" count="3" type="stmt"/>
+        <line num="25" count="3" type="stmt"/>
+        <line num="28" count="39" type="stmt"/>
+        <line num="29" count="36" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="62" count="39" type="stmt"/>
+      </file>
+    </package>
+    <package name="services">
+      <metrics statements="28" coveredstatements="7" conditionals="8" coveredconditionals="0" methods="6" coveredmethods="0"/>
+      <file name="noteServices.js" path="/Users/vladimirapostolov/Desktop/new-app/vite-project/services/noteServices.js">
+        <metrics statements="16" coveredstatements="3" conditionals="6" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="5" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="43" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="44" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+      </file>
+      <file name="userServices.js" path="/Users/vladimirapostolov/Desktop/new-app/vite-project/services/userServices.js">
+        <metrics statements="12" coveredstatements="4" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="1" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="0" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="11" count="1" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="20" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="27" count="0" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

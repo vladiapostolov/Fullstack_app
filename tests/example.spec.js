@@ -1,19 +1,61 @@
-// @ts-check
 import { test, expect } from '@playwright/test';
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+//The tests run in order!
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+const user = {
+  username: "Vladiic",
+  password: "123456"
+}
+test.describe("Initial test", () => {
+  test.beforeEach(async ({ page }) => {
+      await page.goto('http://localhost:3000');
+  })
+  //we isolate the common part of each test!
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+  test('front page can be opened', async ({ page }) => {
 
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
+    const locator = page.getByText('log in');
+    await expect(locator).toBeVisible()
+  })
 
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
-});
+  test('user can log in ', async ({page}) => {
+    await page.getByRole("button", {name: "log in"}).click();
+    await page.getByLabel("username").fill("vladko");
+    // const textboxes = await page.getByRole('textbox').all()
+    // await textboxes[0].fill('mluukkai')
+    // await textboxes[1].fill('salainen').  -->> we use this if there is
+    //  more than one textbox field with no label
+    await page.getByLabel("password").fill("123456j");
+    await page.getByRole("button", {name: "submit"}).click();
+    await expect(page.getByText("Welcome, ")).toBeVisible();
+  } )
+
+  //create a test to fill the log in form with dummy data and verify nothing works
+  test('fill with incorrect data', async ({page, request}) => {
+    const loginResponse = await request.post("/api/login", {
+      data: user
+    });
+    const { token } = await loginResponse.json();
+
+    await request.delete("/api/delete/all");
+
+    await request.post("/api/notes", {
+      data: {
+        text: "abc",
+        important: true
+      },
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    })
+  })
+})
+
+
+  // "scripts": {
+  //   "start": "cross-env NODE_ENV=production node index.js",
+  //   "dev": "cross-env NODE_ENV=development node --watch index.js",
+  //   "test": "cross-env NODE_ENV=test node --test",
+  //   "lint": "eslint .",
+  //   // ...
+  //   "start:test": "cross-env NODE_ENV=test node --watch index.js"

@@ -1,5 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes, Route, Link
+} from 'react-router-dom';
 import LoginPage from '../components/LoginPage';
+import Home from '../components/Home';
 import ToggleVisibility from '../components/ToggleVisiblity';
 import noteServices from '../services/noteServices';
 import userServices from '../services/userServices';
@@ -52,12 +57,17 @@ function App() {
 
   const loginForm = () => (
     <ToggleVisibility>
-      <LoginPage 
-        handleSubmit={handleSubmit} 
-        handlePassword={handlePassword} 
-        handleUsername={handleUsername} 
-        username={username} 
-        password={password}/>
+      <Routes>
+      <Route path="/login" element={
+        <LoginPage 
+          handleSubmit={handleSubmit} 
+          handlePassword={handlePassword} 
+          handleUsername={handleUsername} 
+          username={username} 
+          password={password}/>
+        }
+      />
+      </Routes>
     </ToggleVisibility>
   )
 
@@ -73,8 +83,19 @@ function App() {
           )
   }
 
-  return (
+
+  if(!isUserLogged){
+    return (loginForm())
+  }else{
+    return (
     <>
+      <Link to="/">home</Link>
+
+      <Routes>
+        <Route path="/" element={
+          <Home/>
+        }></Route>
+      </Routes>
       {!isUserLogged && loginForm()}
 
       {!errorMessage && !isUserLogged && notes.map(note => {
@@ -89,7 +110,9 @@ function App() {
 
       {errorMessage && <p>We have the following error: {errorMessage}</p>}
     </>
-  )
+    )
+  }
+
 }
 
 export default App

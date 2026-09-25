@@ -7,8 +7,12 @@ import { loginRouter } from './controllers/login.js';
 
 dotenv.config();
 
+const MONGODB_URL = process.env.NODE_ENV === 'test'
+    ? process.env.TEST_MONGODB_URL
+    : process.env.MONGODB_URL;
+
 try{
-    await mongoose.connect(process.env.MONGODB_URL);
+    await mongoose.connect(MONGODB_URL);
     console.log("Successfull connection")
 }catch(e){
     console.log("Failed to connect");

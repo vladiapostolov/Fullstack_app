@@ -15,6 +15,7 @@ loginRouter.post('/', async (req, res) => {
     }
 
     const user = await User.findOne({ username });
+    console.log("LOGIN DEBUG: received username =", JSON.stringify(username), "| found user =", user);
 
     if(!user){
         return res.status(401).json({error: "No such username"});

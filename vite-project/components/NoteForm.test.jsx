@@ -59,3 +59,5 @@ describe('<NoteForm />', () => {
         //screen.getByPlaceholderText('write note content here')
         //or by id :)
         //npm test -- --coverage
+
+        //shapshot testing -> compares components from different version 

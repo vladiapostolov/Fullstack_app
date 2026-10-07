@@ -14,8 +14,10 @@ notesRouter.get("/", async(req, res) => {
     res.status(200).json(notes);
 })
 
+
 notesRouter.get("/:id", async(req, res) => {
-    const {id} = req.params.id;
+    const id = req.params.id;
+    console.log(id);
 
     if(!id){
         return res.status(404).json({error: "Content missing: ID"});
@@ -27,12 +29,12 @@ notesRouter.get("/:id", async(req, res) => {
         next(e);
     }
 
-    const note = await Note.findById({id});
-    if(!note){
-        return response.status(404).json({error: "Note not found"});
+    const user = await User.findById(id).populate('notes');
+    if(!user){
+        return res.status(404).json({error: "User not found"});
     }
-
-    res.status(200).json(note);
+    console.log(user.notes);
+    res.status(200).json(user.notes);
 })
 
 notesRouter.post('/', async(req, res, next) => {
@@ -71,5 +73,20 @@ notesRouter.delete("/:id", async(req, res, next) => {
         next(e);
     }
 })
+
+notesRouter.put("/", async(req, res, next) => {
+    const token = getToken(req.headers);
+    const data = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    console.log(req.body);
+
+    try{
+        const updatedNote = await Note.findByIdAndUpdate(req.body._id, {important: !req.body.important}, {new: true});
+        console.log(updatedNote);
+        res.status(200).json(updatedNote);
+    }catch(e){
+        res.status(404).json({error: "Note not found in PUT request"});
+        next(e);
+    }
+} )
 
 export {notesRouter};

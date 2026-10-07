@@ -1,34 +1,37 @@
 import { useState } from "react";
+// import { useNotesActions } from "../src/store"
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import noteServices from "../services/noteServices";
 
-const NoteForm = (props) => {
+const NoteForm = () => {
     const [content, setContent] = useState("");
     const [important, setImportant] = useState(true);
     const [isClicked, setisClicked] = useState(false);
-    
+    //const {add} = useNotesActions();
+    const queryClient = useQueryClient()
+
+    const addNoteMutation = useMutation({
+        mutationFn: (note) => {return noteServices.sendUserNote(note)},
+        onSuccess: () => {
+            queryClient.invalidateQueries({queryKey: ['notes']})
+        }
+    })
+
     const handleChange = (e) => {
         setContent(e.target.value);
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        noteServices
-                    .sendUserNote({content, important})
-                    .then(jsonNote => 
-                            props.setNotes([...props.notes, jsonNote]));
-        setContent("");
-        setImportant(!important);
-    }
-
-    const handleClick = (e) => {
-        e.preventDefault();
+    const handleClick = () => {
         setisClicked(!isClicked);
     }
 
     const showForm = () => {
         return (
             <>
-                <form className="Note form" onSubmit={handleSubmit}>
+                <form className="Note form" onSubmit={(e)=>{
+                    e.preventDefault();
+                    addNoteMutation.mutate({content, important})
+                    }}>
                     Add note:
                     <label>
                         Content:
@@ -45,7 +48,7 @@ const NoteForm = (props) => {
                                 value={important} 
                                 onClick={(e) =>{
                                     e.preventDefault();
-                                    setImportant(!important);
+                                    setImportantMutation.mutate({content, important});
                                 }}>
                             {
                                 important ? "True" : "False"

@@ -9,8 +9,8 @@ const getNotes = async () => {
     return response.json();
 }
 
-const getUserNotes = async (user) => {
-    const response = await fetch(`/api/notes/${user._id}`, {
+const getUserNotes = async (id) => {
+    const response = await fetch(`/api/notes/${id}`, {
         method: "GET",
         headers: {
             "Authorization": `Bearer ${userServices.getToken()}`
@@ -22,7 +22,7 @@ const getUserNotes = async (user) => {
     }
 
     const data = await response.json();
-
+    console.log(data);
     return data;
 
 }
@@ -35,8 +35,8 @@ const sendUserNote = async (note) => {
             "content-type": "application/json",
         },
         body:JSON.stringify({
-            text: JSON.stringify(note.content),
-            important: JSON.stringify(note.important)
+            text: note.content,
+            important: note.important
         })
     })
 
@@ -47,4 +47,60 @@ const sendUserNote = async (note) => {
     return response.json();
 }
 
-export default { getNotes, getUserNotes, sendUserNote };
+const updateNote = async (note) => {
+    const id = note._id;
+
+    const response = await fetch("/api/notes",{
+        method: "PUT",
+        headers:{
+            "Authorization": `Bearer ${userServices.getToken()}`,
+            "content-type": "application/json"
+        },
+        body: JSON.stringify({
+            _id: id,
+            important: note.important,
+            text: note.text
+        })
+    })
+
+    if(!response.ok){
+        throw new Error("Failed PUT request");
+    }
+    
+    return response.json();
+}
+
+const deleteNote = async (note) => {
+    const response = await fetch(`/api/notes/${note._id}`,{
+        method: "DELETE",
+        headers:{
+            "content-type": "application/json",
+            "Authorization": `Bearer ${userServices.getToken()}`
+        },
+        body: JSON.stringify({
+            _id: note._id,
+        })
+    })
+    
+    if(!response.ok){
+        throw new Error("Failed DELETE request");
+    }
+}
+
+const getNote = async (note_id) => {
+    const response = await fetch(`/api/notes/${note_id}`,{
+        method: "GET",
+        headers: {
+            "content-type": "application/json",
+            "Authorization": `Bearer ${userServices.getToken()}`
+        }
+    });
+
+    if(!response.ok){
+        throw new Error("Failed GET request for specific note");
+    }
+
+    return await response.json();
+}
+
+export default { getNotes, getUserNotes, sendUserNote, updateNote, deleteNote, getNote };

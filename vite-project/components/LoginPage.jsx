@@ -1,15 +1,36 @@
-const LoginPage = (props) => {
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useLoginUsername, useLoginPassword, useLoginActions } from "../src/login-store";
+import { useUserActions } from "../src/user-store";
+
+const LoginPage = () => {
+    const [error, setError] = useState("");
+    const username = useLoginUsername();
+    const password = useLoginPassword();
+    const { handleUsername, handlePassword, reset } = useLoginActions();
+    const { sendUserData } = useUserActions();
+    const navigate = useNavigate();
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        sendUserData(username, password)
+            .then(() => reset())
+            .then(() => navigate("/home"))
+            .catch(error => setError(error));
+    }
+
     return (
         <>
-            <form onSubmit={props.handleSubmit}>
+            {error && <p>{error}</p>}
+            <form onSubmit={handleSubmit}>
                 <label>
                     username
-                    <input type="text" value={props.username} onChange={props.handleUsername}></input>
+                    <input type="text" value={username} onChange={handleUsername}></input>
                 </label>
                 <br/>
                 <label>
                     password
-                    <input type="text" value={props.password} onChange={props.handlePassword}></input>
+                    <input type="text" value={password} onChange={handlePassword}></input>
                 </label>
                 <br/>
                 <button>submit</button>

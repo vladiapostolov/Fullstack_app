@@ -25,4 +25,8 @@ app.use('/api/users', userRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/notes', notesRouter);
 
+app.get('/*any', (req, res) => {
+    res.sendFile('index.html', {root: 'dist'});
+});
+
 export { app };
